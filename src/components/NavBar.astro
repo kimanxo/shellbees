@@ -1,22 +1,24 @@
 ---
 const { active = "home" } = Astro.props;
 const links = [
-  { href: "/", label: "Hive", key: "home" },
-  { href: "/liberary", label: "Liberary", key: "liberary" },
-  { href: "/privacy_policy", label: "Privacy Policy", key: "privacy" },
+  { href: "/shellbees", label: "Hive", key: "home" },
+  { href: "/shellbees/liberary", label: "Library", key: "library" },
+  { href: "/shellbees/privacy_policy", label: "Privacy Policy", key: "privacy" },
 ];
 ---
 
 <nav
-  class="glass-nav fixed top-0 z-50 flex h-20 w-full items-center  justify-between  shadow-glow md:px-8"
+  class="glass-nav fixed top-0 z-50 flex h-20 w-full items-center justify-between shadow-glow md:px-8"
 >
   <img
-    src="/assets/imgs/logo.png"
+    src="/shellbees/assets/imgs/logo.png"
     alt="ShellBees Logo"
-    class="h-10 w-auto "
+    class="h-10 w-auto"
   />
 
-  <div class=" items-center gap-8 font-headline tracking-tight flex justify-center flex-1">
+  <div
+    class="items-center gap-8 font-headline tracking-tight flex justify-center flex-1"
+  >
     {
       links.map((link) => (
         <a
@@ -33,6 +35,4 @@ const links = [
       ))
     }
   </div>
-
-  
 </nav>

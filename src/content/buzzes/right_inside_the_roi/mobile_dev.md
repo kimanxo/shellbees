@@ -1,7 +1,7 @@
 ---
 title: "Mobile Dev"
 label: "BUZZ 10"
-image: "/assets/imgs/buzzes/mobile_dev.png"
+image: "/shellbees/assets/imgs/buzzes/mobile_dev.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

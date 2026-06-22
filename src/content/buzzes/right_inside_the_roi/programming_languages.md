@@ -1,7 +1,7 @@
 ---
 title: "Programming Languages"
 label: "BUZZ 05"
-image: "/assets/imgs/buzzes/programming_languages.png"
+image: "/shellbees/assets/imgs/buzzes/programming_languages.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

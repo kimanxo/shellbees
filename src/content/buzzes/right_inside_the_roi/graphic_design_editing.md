@@ -1,7 +1,7 @@
 ---
 title: "Graphic Design X Editing"
 label: "BUZZ 12"
-image: "/assets/imgs/buzzes/video_editing.png"
+image: "/shellbees/assets/imgs/buzzes/video_editing.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

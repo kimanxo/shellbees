@@ -1,7 +1,7 @@
 ---
 title: "Front End WEB"
 label: "BUZZ 07"
-image: "/assets/imgs/buzzes/frontend.png"
+image: "/shellbees/assets/imgs/buzzes/frontend.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

@@ -1,7 +1,7 @@
 ---
 title: "Back End WEB"
 label: "BUZZ 08"
-image: "/assets/imgs/buzzes/backend.png"
+image: "/shellbees/assets/imgs/buzzes/backend.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

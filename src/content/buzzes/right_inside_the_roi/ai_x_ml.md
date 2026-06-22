@@ -1,7 +1,7 @@
 ---
 title: "AI X ML"
 label: "BUZZ 03"
-image: "/assets/imgs/buzzes/ai.png"
+image: "/shellbees/assets/imgs/buzzes/ai.png"
 alt: "Hexagonal data streams in deep amber"
 isArchived: false
 isLocked: true

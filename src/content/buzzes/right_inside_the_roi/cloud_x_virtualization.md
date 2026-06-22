@@ -1,7 +1,7 @@
 ---
 title: "Cloud X Virtualization"
 label: "BUZZ 04"
-image: "/assets/imgs/buzzes/cloud.png"
+image: "/shellbees/assets/imgs/buzzes/cloud.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

@@ -1,7 +1,7 @@
 ---
 title: "Linux X GNU"
 label: "BUZZ 02"
-image: "/assets/imgs/buzzes/linux.png"
+image: "/shellbees/assets/imgs/buzzes/linux.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true

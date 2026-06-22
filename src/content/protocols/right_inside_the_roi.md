@@ -1,7 +1,7 @@
 ---
 title: "Protocol 00"
 label: "Right Inside The ROI"
-image: "/assets/imgs/protocols/right_inside_the_roi.png"
+image: "/shellbees/assets/imgs/protocols/right_inside_the_roi.png"
 alt: "In Queue"
 status: "Coming soon"
 isQueue: false

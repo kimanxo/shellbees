@@ -1,7 +1,7 @@
 ---
 title: Microsoft X Windows
 label: "BUZZ 01"
-image: "/assets/imgs/buzzes/windows.png"
+image: "/shellbees/assets/imgs/buzzes/windows.png"
 alt: "Abstract digital landscape with amber light grids"
 isArchived: false
 isLocked: false
