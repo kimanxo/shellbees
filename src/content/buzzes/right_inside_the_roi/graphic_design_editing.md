@@ -5,7 +5,7 @@ image: "/shellbees/assets/imgs/buzzes/video_editing.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true
-publishDate: "2026-05-08"
+publishDate: ""
 ---
 
 Focuses on editing visuals, refining compositions, and producing polished design assets.

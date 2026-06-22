@@ -5,7 +5,7 @@ image: "/shellbees/assets/imgs/buzzes/frontend.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true
-publishDate: "2026-05-08"
+publishDate: ""
 ---
 
 Covers the visual and interactive side of websites, from layout to user experience.

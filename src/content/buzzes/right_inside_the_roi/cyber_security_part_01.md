@@ -5,7 +5,7 @@ image: "/shellbees/assets/imgs/buzzes/cybersecurity.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true
-publishDate: "2026-05-08"
+publishDate: ""
 ---
 
 Introduces the core principles of protecting systems, networks, and data from attacks.

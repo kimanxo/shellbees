@@ -60,6 +60,9 @@ const relatedLibrary = sortedLibrary
               >
                 {buzz.data.label}
               </span>
+              <span class="text-sm text-on-surface-variant">
+                {buzz.data.publishDate}
+              </span>
             </div>
 
             <h1
@@ -68,11 +71,7 @@ const relatedLibrary = sortedLibrary
               {buzz.data.title}
             </h1>
 
-            <p
-              class="max-w-2xl text-lg leading-relaxed text-on-surface-variant"
-            >
-              {buzz.data.description || "No description provided."}
-            </p>
+           
           </div>
         </div>
       </section>

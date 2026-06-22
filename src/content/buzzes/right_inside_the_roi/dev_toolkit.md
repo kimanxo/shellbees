@@ -5,7 +5,7 @@ image: "/shellbees/assets/imgs/buzzes/devtools.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true
-publishDate: "2026-05-08"
+publishDate: ""
 ---
 
 Highlights essential tools, workflows, and utilities that improve developer productivity.
