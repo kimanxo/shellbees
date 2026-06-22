@@ -1,10 +1,11 @@
 ---
 title: "Cloud X Virtualization"
 label: "BUZZ 04"
-image: "/src/assets/imgs/buzzes/cloud.png"
+image: "/assets/imgs/buzzes/cloud.png"
 alt: "Dark futuristic circuit board patterns"
 isArchived: false
 isLocked: true
 publishDate: "2026-05-08"
 ---
+
 Explains how cloud infrastructure and virtualization technologies create flexible, scalable computing environments.

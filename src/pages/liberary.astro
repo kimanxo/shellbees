@@ -100,7 +100,7 @@ const ITEMS_PER_PAGE = 6;
                 </p>
                 <div class="flex gap-4">
                   <a
-                    href={`/${heroBuzz.data.isLocked ? "#" : heroBuzz.id}/`}
+                    href={`/${heroBuzz.data.isLocked ? "#" : "buzzes/" + heroBuzz.id}/`}
                     class="rounded-lg border border-outline-variant/20 bg-surface-container-highest/80 px-8 py-3 font-bold backdrop-blur-md transition-colors hover:border-primary hover:text-primary"
                   >
                     Details
@@ -142,7 +142,7 @@ const ITEMS_PER_PAGE = 6;
           {
             secondaryBuzz && (
               <a
-                href={`/${secondaryBuzz.data.isLocked ? "#" : secondaryBuzz.id}/`}
+                href={`/${secondaryBuzz.data.isLocked ? "#" : "buzzes/" + secondaryBuzz.id}/`}
                 class="group flex cursor-pointer flex-col justify-between rounded-xl bg-surface-container-low p-8 transition-colors hover:bg-surface-container-high"
               >
                 <div>

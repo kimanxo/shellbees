@@ -20,7 +20,6 @@ const { buzz } = Astro.props;
 const cleanSlug = buzz.id.replace(".md", "");
 const protocolSlug = cleanSlug.split("/")[0];
 
-
 // ✅ library (for bottom section)
 const libraryItems = await getCollection("buzzes");
 const sortedLibrary = libraryItems.sort((a, b) => {
@@ -28,6 +27,10 @@ const sortedLibrary = libraryItems.sort((a, b) => {
   const numB = parseInt(b.id.match(/\d+/)?.[0] || "0");
   return numB - numA;
 });
+
+const relatedLibrary = sortedLibrary
+  .filter((b) => b.id !== buzz.id && !b.data.isLocked)
+  .slice(0, 3);
 ---
 
 <BaseLayout title={`${buzz.data.title} – Buzz`}>
@@ -146,18 +149,30 @@ const sortedLibrary = libraryItems.sort((a, b) => {
 
           <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
             {
-              sortedLibrary
-                .filter((b) => b.id !== buzz.id)
-                .slice(0, 3)
-                .map((item) => (
+              (() => {
+                const visible = sortedLibrary
+                  .filter((b) => b.id !== buzz.id && !b.data.isLocked)
+                  .slice(0, 3);
+
+                if (visible.length === 0) {
+                  return (
+                    <div class="col-span-1 md:col-span-3">
+                      <p class="text-on-surface-variant">No items available.</p>
+                    </div>
+                  );
+                }
+
+                return visible.map((item) => (
                   <LibraryCard
                     label={item.data.label}
                     title={item.data.title}
                     image={item.data.image}
                     alt={item.data.alt}
+                    duration={item.data.duration || "0:00"}
                     protocolSlug={protocolSlug}
                   />
-                ))
+                ));
+              })()
             }
           </div>
         </div>
