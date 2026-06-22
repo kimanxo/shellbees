@@ -1,0 +1,86 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBar from "../../components/NavBar.astro";
+import ProtocolHero from "../../components/protocols/ProtocolHero.astro";
+import ProtocolStats from "../../components/protocols/ProtocolStats.astro";
+import ProtocolBuzzList from "../../components/protocols/ProtocolBuzzList.astro";
+
+// ✅ FIXED getStaticPaths using protocol.id
+export async function getStaticPaths() {
+  const protocols = await getCollection("protocols");
+
+  return protocols.map((protocol) => ({
+    params: { slug: protocol.id.replace(".md", "") },
+    props: { protocol },
+  }));
+}
+
+const { slug } = Astro.params;
+const { protocol } = Astro.props;
+
+// (optional safety — in case props fail)
+const allProtocols = await getCollection("protocols");
+const currentProtocol =
+  protocol || allProtocols.find((p) => p.id.replace(".md", "") === slug);
+
+// 🔁 Buzz logic (safe to re-enable)
+const allBuzzes = await getCollection("buzzes");
+
+// derive protocol slug safely
+const protocolSlug = currentProtocol.id.replace(".md", "");
+
+const episodes = allBuzzes.filter(
+  (buzz) => buzz.id.toString().split("/")[0] === protocolSlug,
+);
+
+const totalBuzzes = episodes.length;
+
+const activeBuzzes = episodes.filter(
+  (entry) => !entry.data.isArchived && !entry.data.isLocked,
+).length;
+
+const upcomingBuzzes = episodes.filter((entry) => entry.data.isLocked).length;
+
+const avgDuration = null;
+
+const heroEpisode = episodes.find((episode) => !episode.data.isLocked);
+
+// UI data
+const heroImage = currentProtocol.data.image || heroEpisode?.data.image || "";
+
+const heroLabel =
+  currentProtocol.data.label || `PROTOCOL ${protocolSlug.toUpperCase()}`;
+
+const heroTitle = currentProtocol.data.title || "Protocol";
+
+const heroDescription =
+  currentProtocol.body.trim() || "No description available for this protocol.";
+---
+
+<BaseLayout title={`${heroTitle}: ${currentProtocol.data.label}`}>
+  <div
+    class="main-shell min-h-screen flex flex-col bg-background text-on-background"
+  >
+    <NavBar active="directory" />
+
+    <main class="flex-grow pt-20">
+      <ProtocolHero
+        title={heroTitle}
+        label={heroLabel}
+        description={heroDescription}
+        image={heroImage}
+        ctaHref={`/buzzes/${heroEpisode?.id}`}
+      />
+
+      <ProtocolStats
+        totalBuzzes={totalBuzzes}
+        activeBuzzes={activeBuzzes}
+        upcomingBuzzes={upcomingBuzzes}
+        avgDuration={avgDuration}
+      />
+
+      <ProtocolBuzzList episodes={episodes} fallbackImage={heroImage} />
+    </main>
+  </div>
+</BaseLayout>

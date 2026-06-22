@@ -1,0 +1,133 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBar from "../../components/NavBar.astro";
+
+const buzzes = await getCollection("buzzes");
+
+const grouped = new Map();
+
+for (const entry of buzzes) {
+  const sector = entry.data.sector;
+  if (!sector?.slug) continue;
+
+  if (!grouped.has(sector.slug)) {
+    grouped.set(sector.slug, {
+      ...sector,
+      episodes: [],
+    });
+  }
+
+  grouped.get(sector.slug).episodes.push(entry);
+}
+
+const sectors = [...grouped.values()]
+  .map((sector) => {
+    const sortedEpisodes = sector.episodes.sort((a, b) => {
+      const aDate = new Date(a.data.publishDate ?? a.data.date ?? 0).getTime();
+      const bDate = new Date(b.data.publishDate ?? b.data.date ?? 0).getTime();
+      return bDate - aDate;
+    });
+
+    return {
+      ...sector,
+      episodes: sortedEpisodes,
+      latestEpisode: sortedEpisodes[0],
+      totalBuzzes: sortedEpisodes.length,
+    };
+  })
+  .sort((a, b) => a.title.localeCompare(b.title));
+---
+
+<BaseLayout title="Sectors">
+  <div
+    class="main-shell min-h-screen flex flex-col bg-background text-on-background"
+  >
+    <NavBar active="home" />
+
+    <main class="flex-grow pt-28">
+      <section class="mx-auto max-w-7xl px-8 pb-8">
+        <div class="max-w-2xl">
+          <span
+            class="mb-3 block font-headline text-sm uppercase tracking-[0.3em] text-primary"
+          >
+            Sector Index
+          </span>
+          <h1
+            class="mb-6 font-headline text-5xl font-bold tracking-tighter text-white md:text-7xl"
+          >
+            Explore All Sectors
+          </h1>
+          <p class="text-lg leading-relaxed text-zinc-400">
+            Browse every season page generated from your buzz collection.
+          </p>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-8 py-10">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {
+            sectors.map((sector) => {
+              const image =
+                sector.heroImage ||
+                sector.latestEpisode?.data.coverImage ||
+                sector.latestEpisode?.data.image;
+
+              const title = sector.title || sector.name;
+              const description =
+                sector.description ||
+                sector.latestEpisode?.data.description ||
+                "Explore this sector";
+
+              return (
+                <a
+                  href={`/sectors/${sector.slug}/`}
+                  class="group overflow-hidden rounded-xl border border-zinc-800 bg-surface-container transition-colors hover:border-amber-500/50"
+                >
+                  <div class="relative aspect-[4/3] overflow-hidden bg-surface-container-low">
+                    {image && (
+                      <img
+                        src={image}
+                        alt={title}
+                        class="h-full w-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                    <div class="absolute left-4 top-4">
+                      <span class="rounded-sm bg-primary px-2 py-1 text-[10px] font-black uppercase tracking-widest text-on-primary">
+                        {sector.protocolLabel ||
+                          `SECTOR ${sector.slug.toUpperCase()}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="p-6">
+                    <div class="mb-2 flex items-center justify-between gap-4">
+                      <h2 class="font-headline text-2xl font-bold text-white transition-colors group-hover:text-amber-500">
+                        {title}
+                      </h2>
+                      <span class="text-xs uppercase tracking-widest text-zinc-500">
+                        {sector.totalBuzzes} buzzes
+                      </span>
+                    </div>
+
+                    <p class="mb-6 text-sm leading-relaxed text-zinc-400">
+                      {description}
+                    </p>
+
+                    <div class="flex items-center gap-2 font-bold text-primary">
+                      View Sector
+                      <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">
+                        arrow_forward
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

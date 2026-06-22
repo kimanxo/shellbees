@@ -1,0 +1,473 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+---
+
+<BaseLayout title="Privacy Protocol ">
+  <div class="main-shell">
+    <NavBar active="privacy_policy" />
+
+    <main class="relative min-h-screen pt-16">
+      <div class="pointer-events-none fixed inset-0 z-0">
+        <div class="grid-overlay absolute inset-0"></div>
+        <div class="hex-bg absolute inset-0 opacity-40"></div>
+        <div
+          class="amber-pulse absolute left-1/4 top-1/4 h-96 w-96 bg-primary opacity-5 blur-[120px]"
+        >
+        </div>
+        <div
+          class="amber-pulse absolute bottom-1/4 right-1/4 h-64 w-64 bg-secondary opacity-5 blur-[100px]"
+          style="animation-delay: 2s;"
+        >
+        </div>
+      </div>
+
+      <section class="relative z-10 mx-auto max-w-7xl px-6 pb-16 pt-24">
+        <div class="flex flex-col items-center text-center">
+          <div
+            class="mb-4 flex items-center gap-2 font-headline text-xs font-bold uppercase tracking-[0.3em] text-primary"
+          >
+            <span class="h-[1px] w-8 bg-primary"></span>
+            Security Protocol v1.0
+            <span class="h-[1px] w-8 bg-primary"></span>
+          </div>
+
+          <h1
+            class="mb-6 bg-gradient-to-b from-white to-neutral-500 bg-clip-text font-headline text-5xl font-bold tracking-tighter text-transparent md:text-7xl"
+          >
+            Privacy Protocol
+          </h1>
+
+          <p
+            class="max-w-2xl font-body text-lg leading-relaxed text-on-surface-variant"
+          >
+            At Shell Bees, we treat data integrity as our primary directive. Our
+            Privacy Protocol outlines the secure ingestion, archival, and
+            transmission of neural data within the club ecosystem.
+          </p>
+
+          <div class="mt-12 flex flex-wrap justify-center gap-4">
+            <div class="glass-panel flex items-center gap-4 rounded-lg p-4">
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: 'FILL' 1;"
+              >
+                verified_user
+              </span>
+              <div class="text-left">
+                <div
+                  class="font-headline text-[10px] uppercase tracking-widest text-on-surface-variant"
+                >
+                  Status
+                </div>
+                <div class="font-headline text-sm font-bold">
+                  Active Protection
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-panel flex items-center gap-4 rounded-lg p-4">
+              <span
+                class="material-symbols-outlined text-primary"
+                style="font-variation-settings: 'FILL' 1;"
+              >
+                update
+              </span>
+              <div class="text-left">
+                <div
+                  class="font-headline text-[10px] uppercase tracking-widest text-on-surface-variant"
+                >
+                  Last Update
+                </div>
+                <div class="font-headline text-sm font-bold">2026.05.28</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative z-10 mx-auto max-w-5xl px-6 pb-32">
+        <div class="space-y-24">
+          <div class="group grid gap-12 md:grid-cols-12">
+            <div class="md:col-span-4">
+              <div class="sticky top-32">
+                <h2
+                  class="flex items-center gap-4 font-headline text-2xl font-bold text-primary"
+                >
+                  <span class="text-sm font-light opacity-50">01</span>
+                  Data Acquisition
+                </h2>
+                <div
+                  class="relative mt-4 h-1 w-full overflow-hidden bg-surface-container-high"
+                >
+                  <div
+                    class="absolute inset-0 w-1/3 bg-primary transition-transform duration-1000 group-hover:translate-x-[200%]"
+                  >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="technical-border pt-8 pl-8 md:col-span-8">
+              <h3 class="mb-6 font-headline text-xl font-bold text-white">
+                Information We Collect
+              </h3>
+              <div
+                class="space-y-4 font-body text-sm leading-relaxed text-on-surface-variant md:text-base"
+              >
+                <p>
+                  We collect information that you provide directly to us when
+                  you register for the "Hive", participate in our coding
+                  challenges, or communicate with our support systems. This may
+                  include:
+                </p>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-3">
+                    <span
+                      class="material-symbols-outlined mt-1 text-xs text-primary"
+                    >
+                      terminal
+                    </span>
+                    <span>
+                      We do notcollect account details, contact information, and
+                      participation activity.
+                    </span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span
+                      class="material-symbols-outlined mt-1 text-xs text-primary"
+                    >
+                      terminal
+                    </span>
+                    <span>
+                      We may update this policy when our services, tools, or
+                      legal obligations change.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="group grid gap-12 md:grid-cols-12">
+            <div class="md:col-span-4">
+              <div class="sticky top-32">
+                <h2
+                  class="flex items-center gap-4 font-headline text-2xl font-bold text-primary"
+                >
+                  <span class="text-sm font-light opacity-50">02</span>
+                  Member Rights
+                </h2>
+                <div
+                  class="relative mt-4 h-1 w-full overflow-hidden bg-surface-container-high"
+                >
+                  <div
+                    class="absolute inset-0 w-2/3 bg-primary transition-transform duration-1000 group-hover:translate-x-[150%]"
+                  >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="technical-border pt-8 pl-8 md:col-span-8">
+              <h3 class="mb-6 font-headline text-xl font-bold text-white">
+                Your Rights and Choices
+              </h3>
+              <div
+                class="space-y-4 font-body text-sm leading-relaxed text-on-surface-variant md:text-base"
+              >
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div
+                    class="glass-panel rounded border-l-2 border-primary p-4"
+                  >
+                    <h4
+                      class="mb-2 font-headline text-xs font-bold uppercase tracking-widest text-white"
+                    >
+                      Communication Consent
+                    </h4>
+                    <p class="text-xs">
+                      Withdraw consent from optional communications.
+                    </p>
+                  </div>
+
+                  <div
+                    class="glass-panel rounded border-l-2 border-primary p-4"
+                  >
+                    <h4
+                      class="mb-2 font-headline text-xs font-bold uppercase tracking-widest text-white"
+                    >
+                      Participation
+                    </h4>
+                    <p class="text-xs">
+                      Participate in coding challenges, events, and community
+                      forums.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="group grid gap-12 md:grid-cols-12">
+            <div class="md:col-span-4">
+              <div class="sticky top-32">
+                <h2
+                  class="flex items-center gap-4 font-headline text-2xl font-bold text-primary"
+                >
+                  <span class="text-sm font-light opacity-50">02</span>
+                  Member Duties
+                </h2>
+                <div
+                  class="relative mt-4 h-1 w-full overflow-hidden bg-surface-container-high"
+                >
+                  <div
+                    class="absolute inset-0 w-2/3 bg-primary transition-transform duration-1000 group-hover:translate-x-[150%]"
+                  >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="technical-border pt-8 pl-8 md:col-span-8">
+              <h3 class="mb-6 font-headline text-xl font-bold text-white">
+                Your Responsibilities
+              </h3>
+              <div
+                class="space-y-4 font-body text-sm leading-relaxed text-on-surface-variant md:text-base"
+              >
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div
+                    class="glass-panel rounded border-l-2 border-primary p-4"
+                  >
+                    <h4
+                      class="mb-2 font-headline text-xs font-bold uppercase tracking-widest text-white"
+                    >
+                      Respect
+                    </h4>
+                    <p class="text-xs">
+                      Respect other members’ privacy and community rules.
+                    </p>
+                  </div>
+
+                  <div
+                    class="glass-panel rounded border-l-2 border-primary p-4"
+                  >
+                    <h4
+                      class="mb-2 font-headline text-xs font-bold uppercase tracking-widest text-white"
+                    >
+                      Responsible Use
+                    </h4>
+                    <p class="text-xs">
+                      Do not misuse club content, tools, or private resources.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="group grid gap-12 md:grid-cols-12">
+            <div class="md:col-span-4">
+              <div class="sticky top-32">
+                <h2
+                  class="flex items-center gap-4 font-headline text-2xl font-bold text-primary"
+                >
+                  <span class="text-sm font-light opacity-50">03</span>
+                  Club duties
+                </h2>
+                <div
+                  class="relative mt-4 h-1 w-full overflow-hidden bg-surface-container-high"
+                >
+                  <div
+                    class="absolute inset-0 w-full origin-left bg-primary transition-transform duration-1000 group-hover:scale-x-0"
+                  >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="technical-border pt-8 pl-8 md:col-span-8">
+              <h3 class="mb-6 font-headline text-xl font-bold text-white">
+                Our Commitment
+              </h3>
+              <div
+                class="space-y-4 font-body text-sm leading-relaxed text-on-surface-variant md:text-base"
+              >
+                <p>
+                  As an online tech club, we are responsible for handling member
+                  data lawfully, limiting collection to what is necessary,
+                  protecting club systems, and communicating clearly about how
+                  information is used. [web:124][web:130]
+                </p>
+
+                <div
+                  class="relative overflow-hidden rounded bg-surface-container-high p-6"
+                >
+                  <div class="absolute right-0 top-0 p-4 opacity-10">
+                    <span class="material-symbols-outlined text-7xl"
+                      >security</span
+                    >
+                  </div>
+
+                  <ul class="space-y-3 pr-8 list-disc">
+                    <li>
+                      Collect only the information needed to run memberships,
+                      events, learning programs, and club communications.
+                    </li>
+                    <li>
+                      Use member data only for legitimate club operations and
+                      not for unrelated purposes.
+                    </li>
+                    <li>
+                      Protect accounts, forms, and stored records with
+                      reasonable technical and organizational safeguards.
+                    </li>
+
+                    <li>
+                      Notify members when major privacy practices change or when
+                      a serious data incident affects them.
+                    </li>
+
+                    <li>
+                      Maintain a respectful online environment and act on
+                      reports involving harassment, misuse, or privacy
+                      violations.
+                    </li>
+                  </ul>
+
+                  <p class="mt-4">
+                    We also expect members to use strong passwords, avoid
+                    sharing private information publicly, and report suspicious
+                    activity quickly so the club can respond and reduce risk.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <style>
+      .hex-bg {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0.03' fill='%23FFB800' fill-rule='evenodd'/%3E%3C/svg%3E");
+      }
+
+      .grid-overlay {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(255, 184, 0, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(255, 184, 0, 0.05) 1px,
+            transparent 1px
+          );
+        background-size: 40px 40px;
+      }
+
+      .amber-pulse {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.3;
+          transform: scale(1.1);
+        }
+      }
+
+      .glass-panel {
+        background: rgba(26, 26, 26, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 184, 0, 0.1);
+      }
+
+      .technical-border {
+        position: relative;
+        transition: background 0.3s ease;
+      }
+
+      .technical-border::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 2px;
+        background: #ffb800;
+      }
+
+      .technical-border::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 20px;
+        background: #ffb800;
+      }
+    </style>
+
+    <script is:inline>
+      document.querySelectorAll(".technical-border").forEach((panel) => {
+        panel.addEventListener("mouseenter", () => {
+          panel.style.backgroundColor = "rgba(255, 184, 0, 0.02)";
+        });
+
+        panel.addEventListener("mouseleave", () => {
+          panel.style.backgroundColor = "transparent";
+        });
+      });
+
+      const createParticle = () => {
+        const particle = document.createElement("div");
+        const size = Math.random() * 2 + 1;
+
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.background = "#FFB800";
+        particle.style.position = "fixed";
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        particle.style.opacity = String(Math.random() * 0.5);
+        particle.style.borderRadius = "50%";
+        particle.style.pointerEvents = "none";
+        particle.style.zIndex = "1";
+
+        document.body.appendChild(particle);
+
+        const duration = Math.random() * 20000 + 10000;
+        const animation = particle.animate(
+          [
+            { transform: "translateY(0)", opacity: particle.style.opacity },
+            {
+              transform: `translateY(-${Math.random() * 200 + 100}px)`,
+              opacity: 0,
+            },
+          ],
+          {
+            duration,
+            easing: "linear",
+          },
+        );
+
+        animation.onfinish = () => {
+          particle.remove();
+          createParticle();
+        };
+      };
+
+      for (let i = 0; i < 20; i += 1) {
+        createParticle();
+      }
+    </script>
+  </div>
+</BaseLayout>

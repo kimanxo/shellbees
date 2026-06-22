@@ -1,0 +1,489 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import BuzzCard from "../components/BuzzCard.astro";
+import ProtocolCard from "../components/ProtocolCard.astro";
+import { getCollection } from "astro:content";
+import { parseDate, formatDate } from "../utils";
+const buzzes = await getCollection("buzzes");
+const protocols = await getCollection("protocols");
+
+const excerptFromBody = (body?: string, max = 140) => {
+  const text = (body ?? "").replace(/\s+/g, " ").trim();
+  if (!text) return "No description available yet.";
+  return text.length > max ? `${text.slice(0, max).trim()}…` : text;
+};
+
+const getProtocolKeyFromBuzzId = (id: string) => id.split("/")[0];
+
+const sortedBuzzes = [...buzzes].sort((a, b) => {
+  const dateDiff =
+    parseDate(b.data.publishDate) - parseDate(a.data.publishDate);
+  if (dateDiff !== 0) return dateDiff;
+  return a.id.localeCompare(b.id);
+});
+
+const sortedProtocols = [...protocols].sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+
+const heroBuzz =
+  sortedBuzzes.find((buzz) => !buzz.data.isLocked) ?? sortedBuzzes[0] ?? null;
+
+const secondaryBuzz =
+  sortedBuzzes.find(
+    (buzz) => buzz.id !== heroBuzz?.id && !buzz.data.isLocked,
+  ) ??
+  sortedBuzzes.find((buzz) => buzz.id !== heroBuzz?.id) ??
+  null;
+
+const totalBuzzes = sortedBuzzes.length;
+const activeBuzzes = sortedBuzzes.filter(
+  (buzz) => !buzz.data.isArchived && !buzz.data.isLocked,
+).length;
+const systemCapacity = totalBuzzes
+  ? Math.round((activeBuzzes / totalBuzzes) * 1000) / 10
+  : 0;
+
+const buzzesForGrid = [...sortedBuzzes];
+const ITEMS_PER_PAGE = 6;
+---
+
+<BaseLayout title="Buzz Directory">
+  <div class="main-shell">
+    <NavBar active="liberary" />
+
+    <main class="mx-auto max-w-7xl px-8 pb-20 pt-32">
+      <header class="mb-16">
+        <div
+          class="flex flex-col justify-between gap-6 md:flex-row md:items-end"
+        >
+          <div>
+            <span
+              class="mb-2 block font-headline text-sm uppercase tracking-widest text-primary"
+            >
+              Protocol Archive
+            </span>
+            <h1
+              class="font-headline text-5xl font-bold tracking-tighter md:text-7xl"
+            >
+              Buzz Directory
+            </h1>
+          </div>
+        </div>
+      </header>
+
+      <section class="mb-24 grid grid-cols-1 gap-8 md:grid-cols-12">
+        {
+          heroBuzz && (
+            <article class="group relative overflow-hidden rounded-xl bg-surface-container-low md:col-span-8">
+              <img
+                alt={heroBuzz.data.alt}
+                src={heroBuzz.data.image}
+                class="aspect-video h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div class="absolute bottom-0 left-0 w-full p-10">
+                <div class="mb-4 flex items-center gap-3">
+                  <span class="rounded-full bg-primary px-3 py-1 text-xs font-bold text-black">
+                    {heroBuzz.data.isArchived ? "Archive" : "Latest Buzz"}
+                  </span>
+                  <span class="text-sm font-medium text-tertiary">
+                    {formatDate(heroBuzz.data.publishDate)}
+                  </span>
+                </div>
+                <h2 class="mb-4 font-headline text-4xl font-bold">
+                  {heroBuzz.data.title}
+                </h2>
+                <p class="mb-8 max-w-xl text-lg text-on-surface-variant">
+                  {excerptFromBody(heroBuzz.body, 180)}
+                </p>
+                <div class="flex gap-4">
+                  <a
+                    href={`/${heroBuzz.data.isLocked ? "#" : heroBuzz.id}/`}
+                    class="rounded-lg border border-outline-variant/20 bg-surface-container-highest/80 px-8 py-3 font-bold backdrop-blur-md transition-colors hover:border-primary hover:text-primary"
+                  >
+                    Details
+                  </a>
+                </div>
+              </div>
+            </article>
+          )
+        }
+
+        <div class="grid gap-8 md:col-span-4 md:grid-rows-2">
+          <article
+            class="rounded-xl border-l-4 border-secondary bg-surface-container-high p-8"
+          >
+            <span
+              class="mb-4 block text-sm font-bold uppercase tracking-widest text-secondary"
+            >
+              System Capacity
+            </span>
+            <div
+              class="mb-2 font-headline text-6xl font-extrabold text-on-surface"
+            >
+              {systemCapacity}<span class="text-2xl text-primary">%</span>
+            </div>
+            <p class="text-sm text-on-surface-variant">
+              Active hive synchronization across all sectors.
+            </p>
+            <div
+              class="mt-6 h-1 w-full overflow-hidden rounded-full bg-surface-container-lowest"
+            >
+              <div
+                class="h-full bg-primary"
+                style={`width: ${Math.min(systemCapacity, 100)}%`}
+              >
+              </div>
+            </div>
+          </article>
+
+          {
+            secondaryBuzz && (
+              <a
+                href={`/${secondaryBuzz.data.isLocked ? "#" : secondaryBuzz.id}/`}
+                class="group flex cursor-pointer flex-col justify-between rounded-xl bg-surface-container-low p-8 transition-colors hover:bg-surface-container-high"
+              >
+                <div>
+                  <span class="mb-2 block text-sm font-bold uppercase tracking-widest text-primary">
+                    {secondaryBuzz.data.label}
+                  </span>
+                  <h3 class="font-headline text-2xl font-bold">
+                    {secondaryBuzz.data.title}
+                  </h3>
+                </div>
+                <div class="flex items-end justify-between">
+                  <span class="text-sm text-on-surface-variant">
+                    {secondaryBuzz.data.isArchived
+                      ? "Archived transmission"
+                      : secondaryBuzz.data.isLocked
+                        ? "Locked transmission"
+                        : "Active transmission"}
+                  </span>
+                  <span class="material-symbols-outlined text-primary transition-transform group-hover:translate-x-2">
+                    arrow_forward
+                  </span>
+                </div>
+              </a>
+            )
+          }
+        </div>
+      </section>
+
+      <section id="historical-archives">
+        <h3
+          class="mb-8 flex items-center gap-3 font-headline text-2xl font-bold"
+        >
+          <span class="w-8 bg-primary"></span>
+          Historical Archives
+        </h3>
+
+        <div class="mb-6 flex flex-wrap items-center gap-4">
+          <div
+            class="flex w-fit flex-wrap items-center gap-4 rounded-xl bg-surface-container-low p-2"
+          >
+            <button
+              type="button"
+              data-filter="all"
+              class="filter-btn rounded bg-surface-container-highest px-4 py-2 font-medium text-primary"
+            >
+              All 
+            </button>
+
+            <button
+              type="button"
+              data-filter="locked"
+              class="filter-btn px-4 py-2 text-on-surface-variant transition-colors hover:text-primary"
+            >
+              Coming
+            </button>
+            <button
+              type="button"
+              data-filter="ready"
+              class="filter-btn px-4 py-2 text-on-surface-variant transition-colors hover:text-primary"
+            >
+              Ready
+            </button>
+          </div>
+
+          <div
+            class="ml-auto flex w-fit items-center gap-2 rounded-xl bg-surface-container-low p-2"
+          >
+            <button
+              type="button"
+              data-sort="latest"
+              class="sort-btn rounded bg-surface-container-highest px-4 py-2 font-medium text-primary"
+            >
+              Latest
+            </button>
+            <button
+              type="button"
+              data-sort="oldest"
+              class="sort-btn px-4 py-2 text-on-surface-variant transition-colors hover:text-primary"
+            >
+              Oldest
+            </button>
+            <button
+              type="button"
+              data-sort="title"
+              class="sort-btn px-4 py-2 text-on-surface-variant transition-colors hover:text-primary"
+            >
+              Title
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="buzz-grid"
+          class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {
+            buzzesForGrid.map((buzz) => (
+              <div
+                class="buzz-item"
+                data-id={buzz.id}
+                data-title={buzz.data.title.toLowerCase()}
+                data-date={parseDate(buzz.data.publishDate)}
+                data-locked={buzz.data.isLocked ? "true" : "false"}
+                
+                data-archived={buzz.data.isArchived ? "true" : "false"}
+              >
+                <BuzzCard
+                  title={buzz.data.title}
+                  label={buzz.data.label}
+                  image={buzz.data.image}
+                  alt={buzz.data.alt}
+                  protocol={getProtocolKeyFromBuzzId(buzz.id)}
+                  description={excerptFromBody(buzz.body)}
+                  isLocked={buzz.data.isLocked}
+                  isArchived={buzz.data.isArchived}
+                />
+              </div>
+            ))
+          }
+        </div>
+
+        <div
+          id="empty-state"
+          class="hidden py-12 text-center text-on-surface-variant"
+        >
+          No buzzes match this filter.
+        </div>
+
+        <div
+          id="pagination"
+          class="mt-16 flex items-center justify-center gap-2"
+        >
+          <button
+            id="prev-page"
+            class="group flex h-10 w-10 items-center justify-center rounded-lg border border-outline-variant/20 bg-surface-container-low text-on-surface-variant transition-all hover:border-primary hover:text-primary"
+          >
+            <span
+              class="material-symbols-outlined text-lg transition-transform group-hover:-translate-x-1"
+            >
+              chevron_left
+            </span>
+          </button>
+
+          <div id="page-numbers" class="flex items-center gap-2 px-4"></div>
+
+          <button
+            id="next-page"
+            class="group flex h-10 w-10 items-center justify-center rounded-lg border border-outline-variant/20 bg-surface-container-low text-on-surface-variant transition-all hover:border-primary hover:text-primary"
+          >
+            <span
+              class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1"
+            >
+              chevron_right
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <section class="mt-32">
+        <div class="mb-12 flex items-center justify-between">
+          <h3 class="font-headline text-3xl font-bold">Recent Protocols</h3>
+        </div>
+
+        <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            sortedProtocols.map((protocol) => (
+              <ProtocolCard
+                title={protocol.data.title}
+                label={protocol.data.label}
+                image={protocol.data.image}
+                alt={protocol.data.alt}
+                status={protocol.data.status}
+                description={excerptFromBody(protocol.body)}
+                isQueue={protocol.data.isQueue}
+              />
+            ))
+          }
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script is:inline define:vars={{ ITEMS_PER_PAGE }}>
+    const grid = document.getElementById("buzz-grid");
+    const items = Array.from(grid.querySelectorAll(".buzz-item"));
+    const emptyState = document.getElementById("empty-state");
+
+    const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
+    const sortButtons = Array.from(document.querySelectorAll(".sort-btn"));
+
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
+    const pageNumbers = document.getElementById("page-numbers");
+
+    let currentFilter = "all";
+    let currentSort = "latest";
+    let currentPage = 1;
+
+    const getFiltered = () => {
+      return items.filter((item) => {
+        const isLocked = item.dataset.locked === "true";
+
+        if (currentFilter === "locked") return isLocked;
+        if (currentFilter === "ready") return !isLocked;
+        return true;
+      });
+
+    };
+
+    const sortItems = (list) => {
+      list.sort((a, b) => {
+        if (currentSort === "title") {
+          return (a.dataset.title || "").localeCompare(b.dataset.title || "");
+        }
+
+        if (currentSort === "oldest") {
+          return Number(a.dataset.date || 0) - Number(b.dataset.date || 0);
+        }
+
+        return Number(b.dataset.date || 0) - Number(a.dataset.date || 0);
+      });
+
+      return list;
+    };
+
+    const updateButtons = () => {
+      filterButtons.forEach((btn) => {
+        const active = btn.dataset.filter === currentFilter;
+        btn.classList.toggle("rounded", active);
+        btn.classList.toggle("bg-surface-container-highest", active);
+        btn.classList.toggle("font-medium", active);
+        btn.classList.toggle("text-primary", active);
+        btn.classList.toggle("text-on-surface-variant", !active);
+      });
+
+      sortButtons.forEach((btn) => {
+        const active = btn.dataset.sort === currentSort;
+        btn.classList.toggle("rounded", active);
+        btn.classList.toggle("bg-surface-container-highest", active);
+        btn.classList.toggle("font-medium", active);
+        btn.classList.toggle("text-primary", active);
+        btn.classList.toggle("text-on-surface-variant", !active);
+      });
+    };
+
+    const updatePagination = (totalPages) => {
+      pageNumbers.innerHTML = "";
+
+      for (let page = 1; page <= totalPages; page++) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = String(page);
+        button.className =
+          page === currentPage
+            ? "h-10 w-10 rounded-lg bg-primary font-headline font-bold text-black"
+            : "h-10 w-10 rounded-lg bg-surface-container-low font-headline text-on-surface-variant transition-colors hover:text-primary";
+
+        button.addEventListener("click", () => {
+          currentPage = page;
+          applyState();
+        });
+
+        pageNumbers.appendChild(button);
+      }
+
+      prevPageBtn.disabled = currentPage === 1;
+      nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+      prevPageBtn.classList.toggle("pointer-events-none", currentPage === 1);
+      prevPageBtn.classList.toggle("opacity-40", currentPage === 1);
+      nextPageBtn.classList.toggle(
+        "pointer-events-none",
+        currentPage === totalPages || totalPages === 0,
+      );
+      nextPageBtn.classList.toggle(
+        "opacity-40",
+        currentPage === totalPages || totalPages === 0,
+      );
+    };
+
+    const applyState = () => {
+      const filtered = sortItems(getFiltered());
+      const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+
+      if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+      if (totalPages === 0) currentPage = 1;
+
+      items.forEach((item) => {
+        item.style.display = "none";
+      });
+
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const visibleItems = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+      filtered.forEach((item) => grid.appendChild(item));
+      visibleItems.forEach((item) => {
+        item.style.display = "";
+      });
+
+      emptyState.classList.toggle("hidden", filtered.length > 0);
+      document
+        .getElementById("pagination")
+        .classList.toggle("hidden", filtered.length === 0);
+
+      updateButtons();
+      updatePagination(totalPages);
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        currentFilter = button.dataset.filter || "all";
+        currentPage = 1;
+        applyState();
+      });
+    });
+
+    sortButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        currentSort = button.dataset.sort || "latest";
+        currentPage = 1;
+        applyState();
+      });
+    });
+
+    prevPageBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage -= 1;
+        applyState();
+      }
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+      const totalVisible = getFiltered().length;
+      const totalPages = Math.ceil(totalVisible / ITEMS_PER_PAGE);
+      if (currentPage < totalPages) {
+        currentPage += 1;
+        applyState();
+      }
+    });
+
+    // Initialize on page load
+    applyState();
+  </script>
+</BaseLayout>

@@ -1,0 +1,65 @@
+---
+import ProtocolBuzzCard from "./ProtocolBuzzCard.astro";
+
+interface EpisodeItem {
+  slug: string;
+  data: Record<string, any>;
+}
+
+interface Props {
+  episodes: EpisodeItem[];
+  fallbackImage?: string;
+}
+
+const { episodes, fallbackImage} = Astro.props;
+
+
+---
+
+<section id="sector-buzzes" class="mx-auto max-w-7xl px-8 py-20">
+  <div class="mb-12 flex items-end justify-between">
+    <div>
+      <h2 class="mb-2 text-3xl font-bold tracking-tight text-white">
+        Active Buzzes
+      </h2>
+      <p class="text-zinc-500">
+        Scheduled transmissions and archival data for this protocol.
+      </p>
+    </div>
+
+    
+  </div>
+
+  <div class="flex flex-col gap-6">
+    {
+      episodes
+        ?.slice()
+        .sort((a, b) => Number(a.data.isLocked) - Number(b.data.isLocked))
+        .map((episode) => {
+          const image =
+            episode.data.coverImage || episode.data.image || fallbackImage;
+
+          const publishDate = episode.data.publishDate || episode.data.date;
+
+          const formattedDate = publishDate
+            ? new Date(publishDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+              })
+            : "Coming soon";
+
+          return (
+            <ProtocolBuzzCard
+              id = {episode.id}
+              title={episode.data.title}
+              description={episode.data.description || episode.data.excerpt || ""}
+              image={image}
+              formattedDate={formattedDate}
+              isLocked={episode.data.isLocked}
+            />
+          );
+        })
+    }
+  </div>
+</section>

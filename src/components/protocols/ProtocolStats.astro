@@ -1,0 +1,60 @@
+---
+interface Props {
+  totalBuzzes: number;
+  activeBuzzes: number;
+  upcomingBuzzes: number;
+  avgDuration: number | null;
+}
+
+const { totalBuzzes, activeBuzzes, upcomingBuzzes, avgDuration } = Astro.props;
+---
+
+<section class="border-y border-zinc-800/50 bg-surface-container-low">
+  <div
+    class="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-8 py-6 md:grid-cols-4"
+  >
+    <div class="flex flex-col">
+      <span
+        class="mb-1 text-xs font-bold uppercase tracking-widest text-zinc-500"
+      >
+        Total Buzzes
+      </span>
+      <span class="headline text-2xl font-bold text-amber-500">
+        {totalBuzzes} Units
+      </span>
+    </div>
+
+    <div class="flex flex-col">
+      <span
+        class="mb-1 text-xs font-bold uppercase tracking-widest text-zinc-500"
+      >
+        Active Buzzes
+      </span>
+      <span class="headline text-2xl font-bold text-amber-500">
+        {activeBuzzes}
+      </span>
+    </div>
+
+    <div class="flex flex-col">
+      <span
+        class="mb-1 text-xs font-bold uppercase tracking-widest text-zinc-500"
+      >
+        Upcoming
+      </span>
+      <span class="headline text-2xl font-bold text-amber-500">
+        {upcomingBuzzes}
+      </span>
+    </div>
+
+    <div class="flex flex-col">
+      <span
+        class="mb-1 text-xs font-bold uppercase tracking-widest text-zinc-500"
+      >
+        Avg Duration
+      </span>
+      <span class="headline text-2xl font-bold text-amber-500">
+        {avgDuration ? `${avgDuration} min` : "N/A"}
+      </span>
+    </div>
+  </div>
+</section>

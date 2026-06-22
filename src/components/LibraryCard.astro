@@ -1,0 +1,44 @@
+---
+import { slugify } from '../utils';
+
+interface Props {
+  label: string;
+  title: string;
+  duration: string;
+  image: string;
+  alt: string;
+  isUpcoming?: boolean;
+  protocolSlug: string;
+}
+
+const { label, title, duration, image, alt, isUpcoming = false, protocolSlug } = Astro.props;
+---
+
+<a
+  class="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-container-highest"
+  href={`/buzzes/${protocolSlug}/${slugify(title)}/`}
+>
+  <img
+    src={image}
+    alt={alt}
+    class="absolute inset-0 h-full w-full object-cover opacity-50 transition-transform duration-700 group-hover:scale-110"
+  />
+  <div
+    class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"
+  >
+  </div>
+  <div class="absolute bottom-0 left-0 p-8">
+    <span
+      class="mb-2 block font-headline text-[10px] font-bold uppercase tracking-[0.3em] text-secondary"
+    >
+      {label}
+    </span>
+    <h4 class="mb-4 font-headline text-xl font-bold">{title}</h4>
+    <div class="flex items-center gap-4 text-xs text-on-surface-variant">
+      <span>{duration}</span>
+      <span class="material-symbols-outlined text-sm">
+        {isUpcoming ? "event" : "visibility"}
+      </span>
+    </div>
+  </div>
+</a>

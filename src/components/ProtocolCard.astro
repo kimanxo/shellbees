@@ -1,0 +1,79 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+  label: string;
+  status: string;
+  isQueue?: boolean;
+}
+
+const {
+  title,
+  description,
+  image,
+  alt,
+  label,
+  status,
+  isQueue = false,
+} = Astro.props;
+
+import { slugify } from "./../utils";
+
+---
+
+{
+  isQueue ? (
+    <article class="group flex aspect-[4/3] flex-col items-center justify-center rounded-xl border-2 border-dashed border-outline-variant/20 bg-surface-container-lowest p-8 text-center">
+      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-container-low transition-transform group-hover:scale-110">
+        <span class="material-symbols-outlined text-3xl text-primary">
+          hourglass_empty
+        </span>
+      </div>
+      <h4 class="mb-1 font-headline text-lg font-bold">{title}</h4>
+      <p class="text-xs uppercase tracking-widest text-on-surface-variant">
+        {description}
+      </p>
+      <p class="text-xs mt-10 text-primary uppercase tracking-widest text-on-surface-variant">
+        In Queue
+      </p>
+    </article>
+  ) : (
+    <a class="group" href={`/protocols/${slugify(label)}/`}>
+      <div class="relative mb-6 aspect-[4/3] overflow-hidden rounded-xl bg-surface-container-low">
+        <img
+          src={image}
+          alt={alt}
+          class="h-full w-full object-cover opacity-70 grayscale transition-transform duration-500 group-hover:scale-110 group-hover:grayscale-0"
+        />
+        <div class="absolute inset-0 bg-black/20 transition-colors group-hover:bg-transparent" />
+        <div class="absolute left-4 top-4 rounded bg-black/60 px-3 py-1 text-xs font-bold text-secondary backdrop-blur-md">
+          {label}
+        </div>
+        <div class="absolute bottom-4 right-4 flex h-8 w-8 translate-y-2 items-center justify-center rounded-full bg-primary text-black opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+          <span class="material-symbols-outlined text-lg">play_arrow</span>
+        </div>
+      </div>
+      <h4 class="mb-2 font-headline text-xl font-bold transition-colors group-hover:text-primary">
+        {title}
+      </h4>
+      <p class="mb-4 text-sm text-on-surface-variant">{description}</p>
+      <div class="flex items-center justify-between border-t border-outline-variant/10 py-4">
+        <span
+          class="text-xs font-bold uppercase tracking-widest"
+          class:list={{
+            "text-primary": status === "High Impact",
+            "text-tertiary": status !== "High Impact",
+          }}
+        >
+          {status}
+        </span>
+        <button class="flex items-center gap-1 text-sm font-bold text-secondary transition-all hover:gap-2">
+          View{" "}
+          <span class="material-symbols-outlined text-sm">chevron_right</span>
+        </button>
+      </div>
+    </a>
+  )
+}

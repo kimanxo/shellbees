@@ -1,11 +1,329 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import EcosystemHeroCard from "../components/EcosystemHeroCard.astro";
+import EcosystemIconCard from "../components/EcosystemIconCard.astro";
+import EcosystemStatsCard from "../components/EcosystemStatsCard.astro";
+import EditorialCard from "../components/EditorialCard.astro";
+import { getCollection } from "astro:content";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Import buzz and protocol collections
+const buzzes = await getCollection("buzzes");
+const protocols = await getCollection("protocols");
+
+// Get the latest buzz (sorted by ID descending to get the highest number)
+const latestBuzz = buzzes
+  .filter((buzz) => !buzz.data.isLocked)
+  .sort((a, b) => {
+    const numA = parseInt(a.id.match(/\d+/)?.[0] || "0");
+    const numB = parseInt(b.id.match(/\d+/)?.[0] || "0");
+    return numB - numA;
+  })[0];
+
+// Get non-queue protocols for editorial
+const editorialProtocols = protocols
+  .filter((p) => !p.data.isQueue)
+  .sort((a, b) => {
+    const numA = parseFloat(a.id.replace("protocol-", "").replace(/-/g, "."));
+    const numB = parseFloat(b.id.replace("protocol-", "").replace(/-/g, "."));
+    return numB - numA;
+  })
+  .slice(0, 2);
+
+// Stats data
+const statsData = [
+  { number: "01", label: "Hive Keeper", details: "Industry Pros" },
+  { number: "16", label: "Worker Bees", details: "Global Network" },
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Shell Bees">
+  <div class="main-shell">
+    <NavBar active="home" />
+
+    <section
+      class="relative flex min-h-screen items-center overflow-hidden pt-20"
+    >
+      <div class="absolute inset-0">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbhDUBPA6svqdnSnX0HgacfNlcZHLV5IpsUoTHae0bJATOH2hXqqk3M28qc7bLbNzlV3nOv8qTp1PIag6OiUcFQI1WOkEYBwY4N-5D5SiSAN53-SKCkQvE2EJFCrfIZLfecfb4Lop7cutXUhEqH5CuB8G0-3mflEgw5S4uqBwCkpurRGV23z27p4iHSrV9sIBSLvPh8R73jP1NOBFe9b5HzjanoGBT7Cy5F7eq0wRI2DAVbxsTgPl3mqN3wf4Z6nWIJB8ftf"
+          alt="Abstract macro shot of golden crystalline structures"
+          class="h-full w-full object-cover opacity-30"
+        />
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
+
+      <div
+        class="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-col gap-12 px-8 py-16 md:px-16 lg:px-24 lg:gap-16"
+      >
+        <div class="w-full">
+          <span
+            class="mb-6 block font-headline text-sm uppercase tracking-[0.3em] text-primary drop-shadow-lg"
+          >
+            Future Tech Protocol
+          </span>
+          <h1
+            class="font-headline text-5xl font-bold leading-[0.85] tracking-tighter drop-shadow-2xl md:text-8xl lg:text-[10rem]"
+          >
+            FAST FORWARD <br />
+            <span class="text-primary italic">YOUR JOURNEY</span>
+          </h1>
+        </div>
+
+        <div
+          class="grid items-end gap-10 border-t border-outline-variant/20 pt-10 lg:grid-cols-12"
+        >
+          <div class="space-y-6 lg:col-span-7">
+            <p
+              class="max-w-3xl text-xl font-medium leading-relaxed text-on-surface md:text-2xl"
+            >
+              <span class="border-b border-primary/30 text-primary"
+                >Shell Bees</span
+              >
+
+              is an online club for computer science enthausiasts who want to
+              <span class="border-b border-primary/30 text-primary"
+                >fast-forward their journey</span
+              >
+              into the tech industry.
+            </p>
+            <p
+              class="max-w-2xl text-lg leading-relaxed text-on-surface-variant"
+            >
+              Explore different areas of technology from programming and web
+              development to cybersecurity, AI, networking, game development,
+              cloud, and more.
+            </p>
+          </div>
+
+          <div
+            class="flex flex-wrap items-center gap-6 lg:col-span-5 lg:justify-end"
+          >
+            <a
+              href="#ecosystem"
+              class="rounded-md border-2 border-outline-variant/40 px-10 py-5 text-lg font-bold text-primary backdrop-blur-sm transition-all hover:border-primary hover:bg-surface-container-high"
+            >
+              Explore Sectors
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecosystem" class="bg-surface-container-low px-10 py-24">
+      <div class="container mx-auto">
+        <div
+          class="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+        >
+          <div>
+            <span
+              class="mb-2 block font-headline text-sm uppercase tracking-[0.3em] text-primary"
+              >System Analytics</span
+            >
+            <h2
+              class="font-headline text-4xl font-bold tracking-tight md:text-5xl"
+            >
+              The Hive Ecosystem
+            </h2>
+          </div>
+          <div class="flex gap-4">
+            <span
+              class="rounded-full bg-surface-container-highest px-4 py-1 text-xs font-bold tracking-wider text-secondary"
+              >ACTIVE NODES 4,092</span
+            >
+            <span
+              class="rounded-full bg-surface-container-highest px-4 py-1 text-xs font-bold tracking-wider text-tertiary"
+              >UPTIME 99.9</span
+            >
+          </div>
+        </div>
+
+        <div
+          class="grid h-auto grid-cols-1 gap-6 md:h-[600px] md:grid-cols-4 md:grid-rows-2"
+        >
+          <EcosystemHeroCard
+            href={`/buzzes/${latestBuzz.id}`}
+            title={latestBuzz.data.title}
+            description={latestBuzz.body.slice(0, 100)}
+            image={latestBuzz.data.image}
+            alt={latestBuzz.data.alt}
+          />
+
+          <EcosystemIconCard
+            icon="dynamic_feed"
+            title="Live Buzz"
+            description="Real-time streams of intelligence flowing through the hive."
+            iconColor="text-primary"
+          />
+
+          <EcosystemIconCard
+            icon="bolt"
+            title="Tech Club"
+            description="Exclusive insights for premium hive members."
+            iconColor="text-secondary"
+          />
+
+          <EcosystemStatsCard stats={statsData} />
+        </div>
+      </div>
+    </section>
+
+    <section class="px-10 py-24">
+      <div class="container mx-auto max-w-4xl">
+        <div class="mb-16">
+          <span
+            class="mb-2 block font-headline text-sm uppercase tracking-[0.3em] text-primary"
+            >Latest Transmissions</span
+          >
+          <h2 class="font-headline text-4xl font-bold">Buzz Editorial</h2>
+        </div>
+
+        <div class="space-y-16">
+          {
+            editorialProtocols.map((protocol) => (
+              <EditorialCard
+                label={protocol.data.label}
+                title={protocol.data.title}
+                description={protocol.body}
+                image={protocol.data.image}
+                alt={protocol.data.alt}
+                readTime="Read Protocol"
+              />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-surface-container-low px-10 py-24">
+      <div
+        class="container mx-auto grid max-w-6xl gap-20 md:grid-cols-2 md:items-center"
+      >
+        <div>
+          <h2 class="mb-6 font-headline text-5xl font-bold tracking-tight">
+            Signal the <span class="text-primary">Hive</span>
+          </h2>
+          <p class="mb-10 text-xl leading-relaxed text-on-surface-variant">
+            Ready to integrate? Submit your transmission to the core protocol.
+            Our intelligence agents will reach out within one buzz cycle.
+          </p>
+
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-lg border border-outline-variant/10 bg-surface-container-high text-primary"
+              >
+                <span class="material-symbols-outlined">hub</span>
+              </div>
+              <div>
+                <div class="text-sm text-on-surface-variant">Hive Location</div>
+                <div class="font-bold">Sector L1, ST CS</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-lg border border-outline-variant/10 bg-surface-container-high text-primary"
+              >
+                <span class="material-symbols-outlined">alternate_email</span>
+              </div>
+              <div>
+                <div class="text-sm text-on-surface-variant">
+                  Transmission Channel
+                </div>
+                <div class="font-bold">buzz@shellbees.hive</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-2xl border border-outline-variant/10 bg-surface-container-lowest p-10 shadow-2xl shadow-black"
+        >
+          <form id="transmission-form" class="space-y-6">
+            <div class="space-y-2">
+              <label
+                class="block text-sm uppercase tracking-widest text-primary"
+                >Identity</label
+              >
+              <input
+                type="text"
+                placeholder="Your Name"
+                class="h-12 w-full rounded-md border border-outline-variant/30 bg-surface-container-low px-4 text-on-surface transition-all focus:border-primary focus:ring-4 focus:ring-primary/20 focus:outline-none"
+                required
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="block text-sm uppercase tracking-widest text-primary"
+                >Frequency Email</label
+              >
+              <input
+                type="email"
+                placeholder="agent@network.com"
+                class="h-12 w-full rounded-md border border-outline-variant/30 bg-surface-container-low px-4 text-on-surface transition-all focus:border-primary focus:ring-4 focus:ring-primary/20 focus:outline-none"
+                required
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="block text-sm uppercase tracking-widest text-primary"
+                >Transmission Content</label
+              >
+              <textarea
+                rows="4"
+                placeholder="Enter your data stream..."
+                class="w-full resize-none rounded-md border border-outline-variant/30 bg-surface-container-low p-4 text-on-surface transition-all focus:border-primary focus:ring-4 focus:ring-primary/20 focus:outline-none"
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="honey-gradient flex w-full items-center justify-center gap-2 rounded-md py-4 font-bold text-black transition-transform active:scale-[0.98]"
+            >
+              Send Transmission
+              <span class="material-symbols-outlined">send</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <div
+      id="transmission-toast"
+      class="fixed left-1/2 bottom-8 z-50 -translate-x-1/2 translate-y-4 rounded-3xl border border-primary/20 bg-surface-container-high px-6 py-4 text-on-surface shadow-2xl shadow-black/30 opacity-0 transition-all duration-500"
+      aria-live="polite"
+    >
+      <div class="flex items-center gap-4">
+        <span class="material-symbols-outlined text-3xl text-primary">
+          check_circle
+        </span>
+        <div>
+          <p class="font-bold">Transmission Sent</p>
+          <p class="text-sm text-on-surface-variant">
+            Your message is now on the network.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("transmission-form");
+      const toast = document.getElementById("transmission-toast");
+
+      if (form && toast) {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          form.reset();
+          toast.classList.remove("opacity-0", "translate-y-4");
+          toast.classList.add("opacity-100", "translate-y-0");
+
+          window.setTimeout(() => {
+            toast.classList.remove("opacity-100", "translate-y-0");
+            toast.classList.add("opacity-0", "translate-y-4");
+          }, 3200);
+        });
+      }
+    </script>
+  </div></BaseLayout
+>

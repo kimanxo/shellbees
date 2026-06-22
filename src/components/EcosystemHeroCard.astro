@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+  href?: string;
+}
+
+const { title, description, image, alt, href } = Astro.props;
+---
+
+<article
+class="group relative overflow-hidden rounded-xl bg-surface-container-high md:col-span-2 md:row-span-2"
+>
+
+<img
+src={image}
+alt={alt}
+class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110"
+/>
+<a href={href}>
+<div
+class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black to-transparent p-10"
+    >
+    <div class="mb-4 h-1 w-12 bg-secondary"></div>
+    <h3 class="mb-2 font-headline text-3xl font-bold">{title}</h3>
+    <p class="text-on-surface-variant">{description}</p>
+  </div>
+</a>
+</article>

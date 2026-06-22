@@ -1,0 +1,26 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  iconColor?: string;
+}
+
+const { icon, title, description, iconColor = "text-primary" } = Astro.props;
+---
+
+<article
+  class="group flex flex-col justify-between rounded-xl border border-outline-variant/5 bg-surface-container-high p-8"
+  class:list={{
+    "group-hover:border-primary": iconColor === "text-primary",
+    "group-hover:text-primary": iconColor === "text-secondary",
+  }}
+>
+  <span class:list={["material-symbols-outlined", "text-4xl", iconColor]}
+    >{icon}</span
+  >
+  <div>
+    <h4 class="mb-2 text-xl font-bold">{title}</h4>
+    <p class="text-sm text-on-surface-variant">{description}</p>
+  </div>
+</article>

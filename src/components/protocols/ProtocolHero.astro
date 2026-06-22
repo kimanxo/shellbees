@@ -1,0 +1,75 @@
+---
+interface Props {
+  title: string;
+  label: string;
+  description: string;
+  image?: string;
+  ctaHref?: string;
+}
+
+const { title, label, description, image, ctaHref } = Astro.props;
+const lead_ep_id = ctaHref?.split("/")[-1];
+
+---
+
+<section class="relative flex h-[716px] items-center overflow-hidden">
+  {
+    image && (
+      <div class="absolute inset-0 z-0">
+        <img src={image} alt={title} class="h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+        <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+      </div>
+    )
+  }
+
+  <div class="relative z-10 mx-auto w-full max-w-7xl px-8">
+    <div class="max-w-2xl">
+      <div class="mb-4 flex items-center gap-2">
+        <span
+          class="rounded-DEFAULT bg-primary-container px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-primary-container"
+        >
+          {label}
+        </span>
+      </div>
+
+      <h1
+        class="mb-6 font-headline text-6xl font-bold leading-none tracking-tighter text-white md:text-8xl"
+      >
+        {title}
+      </h1>
+
+      <p
+        class="mb-8 max-w-xl text-lg font-light leading-relaxed text-zinc-400 md:text-xl"
+      >
+        {description}
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        {
+          ctaHref && (
+            <a
+              href={lead_ep_id ? ctaHref: "#"}
+              class="flex items-center gap-3 rounded-DEFAULT bg-primary px-8 py-4 font-bold text-on-primary transition-transform active:scale-95"
+            >
+              <span
+                class="material-symbols-outlined"
+                style="font-variation-settings: 'FILL' 1"
+              >
+                play_arrow
+              </span>
+              START PROTOCOL
+            </a>
+          )
+        }
+
+        <a
+          href="#sector-buzzes"
+          class="rounded-DEFAULT border border-zinc-700 px-8 py-4 font-bold text-white transition-colors hover:bg-zinc-800"
+        >
+          VIEW ARCHIVES
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

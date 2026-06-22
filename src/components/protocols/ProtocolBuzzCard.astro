@@ -1,0 +1,133 @@
+---
+import { slugify } from '../../utils';
+
+
+interface Props {
+  id: string;
+  title: string;
+  description?: string;
+  image?: string;
+  minutes?: string | number;
+  formattedDate?: string;
+  isLocked?: boolean;
+  protocolSlug?: string;
+}
+
+const {
+  id,
+  title,
+  description = "",
+  image,
+  formattedDate = "Coming soon",
+  isLocked,
+} = Astro.props;
+
+
+---
+
+<article
+  class:list={[
+    "rounded-DEFAULT border p-1 flex flex-col md:flex-row",
+    isLocked
+      ? "bg-surface-container-low border-zinc-900 opacity-70 cursor-not-allowed"
+      : "group bg-surface-container border-zinc-800 transition-colors hover:border-amber-500/50",
+  ]}
+>
+  <div
+    class:list={[
+      "relative w-full md:w-80 aspect-video rounded-sm overflow-hidden flex-shrink-0",
+      isLocked && "grayscale contrast-125",
+    ]}
+  >
+    {
+      image && (
+        <img
+          src={image}
+          alt={title}
+          class:list={[
+            "h-full w-full object-cover",
+            !isLocked &&
+              "transition-transform duration-500 group-hover:scale-105",
+          ]}
+        />
+      )
+    }
+
+    {
+      isLocked ? (
+        <>
+          <div class="absolute inset-0 flex items-center justify-center bg-black/40">
+            <span class="material-symbols-outlined text-4xl text-white/50">
+              lock
+            </span>
+          </div>
+          <div class="absolute right-3 top-3">
+            <span class="rounded-sm bg-zinc-800 px-2 py-1 text-[10px] font-black text-zinc-400">
+              UPCOMING
+            </span>
+          </div>
+        </>
+      ) : (
+        <div class="absolute right-3 top-3">
+          <span class="rounded-sm bg-primary px-2 py-1 text-[10px] font-black text-on-primary">
+            ACTIVE
+          </span>
+        </div>
+      )
+    }
+  </div>
+
+  <div
+    class="flex flex-grow flex-col justify-between gap-6 p-5 md:flex-row md:items-center"
+  >
+    <div class="max-w-2xl flex-grow">
+      <div
+        class:list={[
+          "mb-2 flex items-center gap-3 text-xs font-medium",
+          isLocked ? "text-zinc-600" : "text-zinc-500",
+        ]}
+      >
+        
+        <span>{formattedDate}</span>
+      </div>
+
+      <h3
+        class:list={[
+          "mb-2 text-xl font-bold",
+          isLocked
+            ? "text-zinc-500"
+            : "text-white transition-colors group-hover:text-amber-500",
+        ]}
+      >
+        {title}
+      </h3>
+
+      <p
+        class:list={[
+          "text-sm leading-relaxed",
+          isLocked ? "text-zinc-600" : "text-zinc-400",
+        ]}
+      >
+        {description}
+      </p>
+    </div>
+
+    {
+      isLocked ? (
+        <button
+          disabled
+          class="flex w-full cursor-not-allowed items-center justify-center gap-2 whitespace-nowrap rounded-DEFAULT bg-zinc-900 px-10 py-3 font-bold text-zinc-600 md:w-auto"
+        >
+          Locked
+        </button>
+      ) : (
+        <a
+          href={`/buzzes/${id}/`}
+          class="w-full whitespace-nowrap rounded-DEFAULT bg-zinc-800 px-10 py-3 text-center font-bold text-white transition-all hover:bg-primary hover:text-on-primary active:scale-95 md:w-auto"
+        >
+          View Buzz
+        </a>
+      )
+    }
+  </div>
+</article>

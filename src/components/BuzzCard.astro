@@ -1,0 +1,75 @@
+---
+import { slugify } from "../utils";
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+  label: string;
+  protocol: string;
+  isLocked?: boolean;
+  isArchived?: boolean;
+}
+
+const {
+  title,
+  description,
+  image,
+  alt,
+  label,
+  protocol,
+  isLocked,
+  isArchived,
+} = Astro.props;
+---
+
+{
+  isLocked ? (
+    <article class="group relative flex aspect-4/3 flex-col items-center justify-center rounded-xl border-2 border-dashed border-outline-variant/20   text-center p-2">
+      <img src={image} alt={alt} class="rounded-md  grayscale contrast-75" />
+      <h4 class="mb-1 font-headline text-lg font-bold">{title}</h4>
+      <p class="text-xs uppercase tracking-widest text-on-surface-variant">
+        upcoming
+      </p>
+    </article>
+  ) : (
+    <a
+      class="group"
+      class:list={{ "opacity-60": isArchived }}
+      href={`/buzzes/${protocol}/${slugify(title)}/`}
+    >
+      <div class="relative mb-6 aspect-[4/3] overflow-hidden rounded-xl bg-surface-container-low">
+        <img
+          src={image}
+          alt={alt}
+          class="h-full w-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-110"
+          class:list={{
+            grayscale: isArchived,
+            "group-hover:grayscale-0": isArchived,
+          }}
+        />
+        <div
+          class="absolute inset-0 bg-black/20 transition-colors group-hover:bg-transparent"
+          class:list={{ "bg-black/40": isArchived }}
+        />
+        <div class="absolute left-4 top-4 rounded bg-black/60 px-3 py-1 text-xs font-bold text-primary backdrop-blur-md">
+          {label}
+        </div>
+      </div>
+      <h4 class="mb-2 font-headline text-xl font-bold transition-colors group-hover:text-primary">
+        {title}
+      </h4>
+      <p class="mb-4 text-sm text-on-surface-variant">{description}</p>
+      <div class="flex items-center justify-between border-t border-outline-variant/10 py-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+          {protocol}
+        </span>
+        <button class="flex items-center gap-1 text-sm font-bold text-secondary transition-all hover:gap-2">
+          View{" "}
+          <span class="material-symbols-outlined text-sm">chevron_right</span>
+        </button>
+      </div>
+    </a>
+  )
+}
