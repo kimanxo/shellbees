@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://kimanxo.github.io",
-  base: "/shellbees",
+  base: "/shellbees/",
   vite: {
     plugins: [tailwindcss()],
   },
