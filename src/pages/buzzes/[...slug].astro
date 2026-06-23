@@ -1,10 +1,10 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NavBar from "../../components/NavBar.astro";
 import LibraryCard from "../../components/LibraryCard.astro";
 
-// ✅ KEEP THIS EXACTLY (DO NOT TOUCH)
+// ✅ KEEP THIS EXACTLY
 export async function getStaticPaths() {
   const buzzes = await getCollection("buzzes");
 
@@ -16,21 +16,22 @@ export async function getStaticPaths() {
 
 const { buzz } = Astro.props;
 
+// ✅ Render markdown content
+const { Content } = await render(buzz);
+
 // ✅ derive clean slug
 const cleanSlug = buzz.id.replace(".md", "");
 const protocolSlug = cleanSlug.split("/")[0];
 
-// ✅ library (for bottom section)
+// ✅ library
 const libraryItems = await getCollection("buzzes");
+
 const sortedLibrary = libraryItems.sort((a, b) => {
   const numA = parseInt(a.id.match(/\d+/)?.[0] || "0");
   const numB = parseInt(b.id.match(/\d+/)?.[0] || "0");
+
   return numB - numA;
 });
-
-const relatedLibrary = sortedLibrary
-  .filter((b) => b.id !== buzz.id && !b.data.isLocked)
-  .slice(0, 3);
 ---
 
 <BaseLayout title={`${buzz.data.title} – Buzz`}>
@@ -39,12 +40,14 @@ const relatedLibrary = sortedLibrary
 
     <main class="pt-20">
       <!-- HERO -->
+
       <section class="relative flex h-[614px] items-end overflow-hidden">
         <img
           src={buzz.data.image}
           alt={buzz.data.alt}
           class="absolute inset-0 h-full w-full object-cover brightness-50"
         />
+
         <div
           class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"
         >
@@ -60,6 +63,7 @@ const relatedLibrary = sortedLibrary
               >
                 {buzz.data.label}
               </span>
+
               <span class="text-sm text-on-surface-variant">
                 {buzz.data.publishDate}
               </span>
@@ -70,16 +74,15 @@ const relatedLibrary = sortedLibrary
             >
               {buzz.data.title}
             </h1>
-
-           
           </div>
         </div>
       </section>
 
       <!-- CONTENT -->
+
       <section class="mx-auto max-w-7xl px-8 py-20">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
-          <div class="space-y-12 md:col-span-7">
+          <article class="space-y-12 md:col-span-7">
             <div>
               <span
                 class="mb-2 block font-headline text-sm font-bold uppercase tracking-[0.2em] text-primary"
@@ -87,25 +90,31 @@ const relatedLibrary = sortedLibrary
                 Technical Briefing
               </span>
 
-              <h2 class="mb-6 font-headline text-3xl font-bold">
-                {buzz.data.title}
-              </h2>
+             
+
+              <!-- Markdown Render -->
 
               <div
-                class="space-y-6 text-lg leading-loose text-on-surface-variant"
+                class="prose
+    prose-invert
+    max-w-none
+    text-lg
+    leading-loose
+    text-on-surface-variant
+    prose-headings:text-on-surface
+    prose-h1:text-5xl
+    prose-h2:text-3xl
+    prose-ol:list-decimal
+    prose-ul:list-disc
+    prose-li:my-2"
               >
-                {
-                  buzz.body ? (
-                    <div set:html={buzz.body} />
-                  ) : (
-                    <p>No content yet.</p>
-                  )
-                }
+                <Content />
               </div>
             </div>
-          </div>
+          </article>
 
           <!-- SIDEBAR -->
+
           <aside class="space-y-8 md:col-span-5">
             <div
               class="overflow-hidden rounded-2xl bg-surface-container-low p-1"
@@ -116,11 +125,13 @@ const relatedLibrary = sortedLibrary
                 <h3
                   class="mb-8 flex items-center gap-3 font-headline text-xl font-bold"
                 >
-                  <span class="material-symbols-outlined text-primary"
-                    >terminal</span
-                  >
+                  <span class="material-symbols-outlined text-primary">
+                    terminal
+                  </span>
+
                   Resources &amp; Code
                 </h3>
+
                 <p class="text-sm text-on-surface-variant">
                   Attach resources later via frontmatter.
                 </p>
@@ -131,37 +142,27 @@ const relatedLibrary = sortedLibrary
       </section>
 
       <!-- LIBRARY -->
+
       <section class="bg-surface-container-low px-8 py-20">
         <div class="mx-auto max-w-7xl">
-          <div class="mb-12 flex items-end justify-between">
-            <div>
-              <span
-                class="mb-2 block font-headline text-sm font-bold uppercase tracking-[0.2em] text-primary"
-              >
-                Continue Exploration
-              </span>
-              <h2 class="font-headline text-4xl font-bold">
-                Next in the Library
-              </h2>
-            </div>
+          <div class="mb-12">
+            <span
+              class="mb-2 block font-headline text-sm font-bold uppercase tracking-[0.2em] text-primary"
+            >
+              Continue Exploration
+            </span>
+
+            <h2 class="font-headline text-4xl font-bold">
+              Next in the Library
+            </h2>
           </div>
 
           <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
             {
-              (() => {
-                const visible = sortedLibrary
-                  .filter((b) => b.id !== buzz.id && !b.data.isLocked)
-                  .slice(0, 3);
-
-                if (visible.length === 0) {
-                  return (
-                    <div class="col-span-1 md:col-span-3">
-                      <p class="text-on-surface-variant">No items available.</p>
-                    </div>
-                  );
-                }
-
-                return visible.map((item) => (
+              sortedLibrary
+                .filter((b) => b.id !== buzz.id && !b.data.isLocked)
+                .slice(0, 3)
+                .map((item) => (
                   <LibraryCard
                     label={item.data.label}
                     title={item.data.title}
@@ -170,8 +171,7 @@ const relatedLibrary = sortedLibrary
                     duration={item.data.duration || "0:00"}
                     protocolSlug={protocolSlug}
                   />
-                ));
-              })()
+                ))
             }
           </div>
         </div>

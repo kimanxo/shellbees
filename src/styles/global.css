@@ -77,3 +77,24 @@ body {
 .panel-border {
   border: 1px solid rgba(72, 72, 71, 0.3);
 }
+
+
+.prose h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.prose h2 {
+  margin-top: 3rem;
+  font-size: 1.8rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+  list-style: circle;
+}
+
+.prose hr {
+  margin: 2rem 0;
+}

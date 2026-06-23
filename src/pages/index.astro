@@ -35,6 +35,12 @@ const statsData = [
   { number: "01", label: "Hive Keeper", details: "Industry Pros" },
   { number: "16", label: "Worker Bees", details: "Global Network" },
 ];
+
+function excerptFromOverview(body) {
+  const match = body.match(/## Overview\s+([\s\S]*?)(?=\n##|$)/);
+
+  return match ? match[1].trim() : "";
+}
 ---
 
 <BaseLayout title="Shell Bees">
@@ -144,7 +150,7 @@ const statsData = [
           <EcosystemHeroCard
             href={`/shellbees/buzzes/${latestBuzz.id}`}
             title={latestBuzz.data.title}
-            description={latestBuzz.body.slice(0, 100)}
+            description={excerptFromOverview(latestBuzz.body)}
             image={latestBuzz.data.image}
             alt={latestBuzz.data.alt}
           />
@@ -274,8 +280,7 @@ const statsData = [
                 rows="4"
                 placeholder="Enter your data stream..."
                 class="w-full resize-none rounded-md border border-outline-variant/30 bg-surface-container-low p-4 text-on-surface transition-all focus:border-primary focus:ring-4 focus:ring-primary/20 focus:outline-none"
-                required
-              ></textarea>
+                required></textarea>
             </div>
             <button
               type="submit"
