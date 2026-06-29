@@ -90,8 +90,6 @@ const sortedLibrary = libraryItems.sort((a, b) => {
                 Technical Briefing
               </span>
 
-             
-
               <!-- Markdown Render -->
 
               <div
@@ -132,49 +130,88 @@ const sortedLibrary = libraryItems.sort((a, b) => {
                   Resources &amp; Code
                 </h3>
 
-                <p class="text-sm text-on-surface-variant">
-                  Attach resources later via frontmatter.
-                </p>
+                <ul>
+                  <li>
+                    <a
+                      class="text-primary underline-offset-2 hover:underline"
+                      href="https://docs.google.com/presentation/d/1wbluqMN5yI6AbKc8JPHXIQnr_I4iIftDfBY--T9GlAc/edit?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Power Point
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-primary underline-offset-2 hover:underline"
+                      href="https://www.youtube.com/watch?v=Jfvg3CS1X3A"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      CMD Tutorial
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-primary underline-offset-2 hover:underline"
+                      href="https://www.youtube.com/watch?v=Ki7hPJ2TAs4"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Winodws Task Manager
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="text-primary underline-offset-2 hover:underline"
+                      href="https://www.youtube.com/watch?v=8d9FY3LpR4E"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Windows Tutorial
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </aside>
         </div>
-      </section>
 
-      <!-- LIBRARY -->
+        <!-- LIBRARY -->
 
-      <section class="bg-surface-container-low px-8 py-20">
-        <div class="mx-auto max-w-7xl">
-          <div class="mb-12">
-            <span
-              class="mb-2 block font-headline text-sm font-bold uppercase tracking-[0.2em] text-primary"
-            >
-              Continue Exploration
-            </span>
+        <section class="bg-surface-container-low px-8 py-20">
+          <div class="mx-auto max-w-7xl">
+            <div class="mb-12">
+              <span
+                class="mb-2 block font-headline text-sm font-bold uppercase tracking-[0.2em] text-primary"
+              >
+                Continue Exploration
+              </span>
 
-            <h2 class="font-headline text-4xl font-bold">
-              Next in the Library
-            </h2>
+              <h2 class="font-headline text-4xl font-bold">
+                Next in the Library
+              </h2>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {
+                sortedLibrary
+                  .filter((b) => b.id !== buzz.id && !b.data.isLocked)
+                  .slice(0, 3)
+                  .map((item) => (
+                    <LibraryCard
+                      label={item.data.label}
+                      title={item.data.title}
+                      image={item.data.image}
+                      alt={item.data.alt}
+                      duration={item.data.duration || "0:00"}
+                      protocolSlug={protocolSlug}
+                    />
+                  ))
+              }
+            </div>
           </div>
-
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {
-              sortedLibrary
-                .filter((b) => b.id !== buzz.id && !b.data.isLocked)
-                .slice(0, 3)
-                .map((item) => (
-                  <LibraryCard
-                    label={item.data.label}
-                    title={item.data.title}
-                    image={item.data.image}
-                    alt={item.data.alt}
-                    duration={item.data.duration || "0:00"}
-                    protocolSlug={protocolSlug}
-                  />
-                ))
-            }
-          </div>
-        </div>
+        </section>
       </section>
     </main>
   </div>
