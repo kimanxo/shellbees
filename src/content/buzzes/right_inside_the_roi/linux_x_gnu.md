@@ -1,5 +1,5 @@
 ---
-title: GNU X Linux
+title: Linux X GNU
 label: "BUZZ 02"
 image: "/shellbees/assets/imgs/buzzes/linux.png"
 alt: "Abstract Linux-inspired digital landscape with terminal and open-source elements"
