@@ -26,34 +26,28 @@ Computer networking is the backbone of modern computing, enabling devices to com
   - LAN
   - MAN
   - WAN
-- Network Topologies
-  - Bus
-  - Star
-  - Ring
-  - Mesh
-  - Tree
 - Network Devices
   - Hub
   - Switch
   - Router
+  - Bridge
   - Modem
   - Access Point
   - Firewall
   - Gateway
 - Network Media
-  - Copper Ethernet
+  - RJ-45
   - Fiber Optics
   - Wireless
 - The OSI Model
 - The TCP/IP Model
-- Encapsulation & Decapsulation
 - MAC Addresses
 - IP Addressing
   - IPv4
   - IPv6
-- Subnetting & CIDR
+- Subnetting
 - Public vs Private IP Addresses
-- Static vs Dynamic IP Addresses
+- Static vs Dynamic IPs
 - NAT (Network Address Translation)
 - Ports & Sockets
 - Common Network Protocols
@@ -65,39 +59,35 @@ Computer networking is the backbone of modern computing, enabling devices to com
   - DNS
   - DHCP
   - HTTP / HTTPS
-  - SSH
   - FTP / SFTP
+  - SSH
   - SMTP
+  - POP3 / IMAP
 - Routing Fundamentals
-- Switching Fundamentals
-- VLANs
-- Wireless Networking (Wi-Fi)
+
 - DNS Resolution Process
+- How the Internet Works
 - What Happens When You Visit a Website?
-- Firewalls
 - VPNs
 - Proxy Servers
 - Load Balancing
-- Content Delivery Networks (CDNs)
-- Network Security Basics
+- CDNs
 - Common Networking Attacks
   - DoS / DDoS
   - ARP Spoofing
   - DNS Spoofing
   - Man-in-the-Middle
   - Packet Sniffing
-- Network Monitoring & Troubleshooting
+- Monitoring & Troubleshooting
   - Ping
   - Traceroute
-  - Netstat / ss
-  - nslookup / dig
-  - tcpdump
+  - Netstat
+  - nslookup
+  - ip
+  - ifconfig
+
   - Wireshark
-- Cloud & Virtual Networking
-- Modern Networking Trends
-  - SDN
-  - NFV
-  - Zero Trust Networking
+
 - Networking Careers & Certifications
 
 ---
